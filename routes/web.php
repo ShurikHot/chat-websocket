@@ -32,6 +32,7 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+
 Route::middleware('auth')->group(function () {
     Route::get('/chats', [ChatController::class, 'index'])->name('chats.index');
     Route::post('/chats', [ChatController::class, 'store'])->name('chats.store');

@@ -8,7 +8,8 @@
                 <div class="mb-3 bg-violet-50 p-3 rounded-xl overflow-y-auto h-[50vh]">
                     <div class="" v-if="messages">
                         <div v-if="!isLastPage" class="text-center mx-2 mb-3 ">
-                            <a @click.prevent="getMessages()" href="#" class="p-1 bg-red-100 text-xs italic rounded-full">
+                            <a @click.prevent="getMessages()" href="#"
+                               class="p-1 bg-red-100 text-xs italic rounded-full hover:bg-red-200">
                                 ... load more ...
                             </a>
                         </div>
@@ -30,7 +31,9 @@
                             <input class="my-3 w-full rounded-full" type="text" placeholder="Your message" v-model="body">
                         </div>
                         <div class="">
-                            <a @click.prevent="store" href="" class="border rounded-lg bg-sky-200 p-1 cursor-pointer font-bold">Send message</a>
+                            <a @click.prevent="store()" href=""
+                               class="border rounded-lg bg-sky-200 p-1 cursor-pointer font-bold hover:bg-sky-300">Send message
+                            </a>
                         </div>
                     </div>
                 </div>
