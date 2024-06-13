@@ -64,7 +64,7 @@
 </template>
 
 <script>
-import Main from "@/Layouts/Main.vue";
+import Main from "@/Layouts/MainChat.vue";
 import axios from "axios";
 
 export default {

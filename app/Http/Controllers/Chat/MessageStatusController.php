@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Chat;
 
-use App\Http\Requests\MessageStatus\UpdateRequest;
-use App\Models\MessageStatus;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Chat\MessageStatus\UpdateRequest;
+use App\Models\Chat\MessageStatus;
 
 class MessageStatusController extends Controller
 {

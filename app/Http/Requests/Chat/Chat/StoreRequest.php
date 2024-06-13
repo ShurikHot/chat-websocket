@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Message;
+namespace App\Http\Requests\Chat\Chat;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -22,10 +22,9 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'chat_id' => 'required|integer|exists:chats,id',
-            'body' => 'required|string',
-            'userIdsWithoutMe' => 'required|array',
-            'userIdsWithoutMe.*' => 'required|integer|exists:users,id',
+            'title' => 'nullable|string',
+            'users' => 'required|array',
+            'users.*' => 'required|integer|exists:users,id'
         ];
     }
 }

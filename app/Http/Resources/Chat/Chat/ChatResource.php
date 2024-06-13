@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Resources\Chat;
+namespace App\Http\Resources\Chat\Chat;
 
-use App\Http\Resources\Message\MessageResource;
+use App\Http\Resources\Chat\Message\MessageResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 

@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Chat;
 
-use App\Http\Requests\Chat\StoreRequest;
-use App\Http\Resources\Chat\ChatResource;
-use App\Http\Resources\Message\MessageResource;
-use App\Http\Resources\User\UserResource;
-use App\Models\Chat;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Chat\Chat\StoreRequest;
+use App\Http\Resources\Chat\Chat\ChatResource;
+use App\Http\Resources\Chat\Message\MessageResource;
+use App\Http\Resources\Chat\User\UserResource;
+use App\Models\Chat\Chat;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 

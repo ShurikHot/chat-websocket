@@ -4,10 +4,10 @@ import {Head} from '@inertiajs/vue3';
 </script>
 
 <template>
-    <Head title="Chats"/>
+    <Head title="Forum"/>
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Chats</h2>
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Forum</h2>
         </template>
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -27,7 +27,7 @@ import {Head} from '@inertiajs/vue3';
 import {Link} from "@inertiajs/vue3";
 
 export default {
-    name: "Main",
+    name: "MainForum",
 
     components: {
         Link

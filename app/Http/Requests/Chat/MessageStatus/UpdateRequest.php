@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\MessageStatus;
+namespace App\Http\Requests\Chat\MessageStatus;
 
 use Illuminate\Foundation\Http\FormRequest;
 

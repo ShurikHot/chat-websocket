@@ -3,7 +3,7 @@
 namespace App\Jobs;
 
 use App\Events\StoreMessageStatusEvent;
-use App\Models\MessageStatus;
+use App\Models\Chat\MessageStatus;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;

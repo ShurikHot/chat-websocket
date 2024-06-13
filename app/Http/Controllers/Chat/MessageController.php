@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Chat;
 
 use App\Events\StoreMessageEvent;
-use App\Http\Requests\Message\StoreRequest;
-use App\Http\Resources\Message\MessageResource;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Chat\Message\StoreRequest;
+use App\Http\Resources\Chat\Message\MessageResource;
 use App\Jobs\StoreMessageStatusJob;
-use App\Models\Message;
+use App\Models\Chat\Message;
 
 class MessageController extends Controller
 {

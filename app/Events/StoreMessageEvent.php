@@ -2,7 +2,7 @@
 
 namespace App\Events;
 
-use App\Http\Resources\Message\MessageResource;
+use App\Http\Resources\Chat\Message\MessageResource;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;

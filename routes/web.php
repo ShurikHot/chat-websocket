@@ -1,8 +1,8 @@
 <?php
 
-use App\Http\Controllers\ChatController;
-use App\Http\Controllers\MessageController;
-use App\Http\Controllers\MessageStatusController;
+use App\Http\Controllers\Chat\ChatController;
+use App\Http\Controllers\Chat\MessageController;
+use App\Http\Controllers\Chat\MessageStatusController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -45,5 +45,17 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+/*!!!!!!!!!!!!!  ОБНОВИТЬ КЭШ РОУТОВ  !!!!!!!!!!!!!!!!   php artisan route:cache   */
+
+Route::middleware('auth')->group(function () {
+    Route::resource('/sections', \App\Http\Controllers\Forum\SectionController::class);
+    Route::resource('/branches', \App\Http\Controllers\Forum\BranchController::class);
+
+    Route::get('/sections/{section}/branches', [\App\Http\Controllers\Forum\SectionController::class, 'getBranches']);
+
+});
+
+/*!!!!!!!!!!!!!  ОБНОВИТЬ КЭШ РОУТОВ  !!!!!!!!!!!!!!!!   php artisan route:cache   */
 
 require __DIR__.'/auth.php';
