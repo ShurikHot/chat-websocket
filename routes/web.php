@@ -4,6 +4,7 @@ use App\Http\Controllers\Chat\ChatController;
 use App\Http\Controllers\Chat\MessageController;
 use App\Http\Controllers\Chat\MessageStatusController;
 use App\Http\Controllers\Forum\BranchController;
+use App\Http\Controllers\Forum\MessageForumController;
 use App\Http\Controllers\Forum\SectionController;
 use App\Http\Controllers\Forum\ThemeController;
 use App\Http\Controllers\ProfileController;
@@ -55,6 +56,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('/sections', SectionController::class);
     Route::resource('/branches', BranchController::class);
     Route::resource('/themes', ThemeController::class);
+    Route::resource('/fmessages', MessageForumController::class);
 
     Route::get('/sections/{section}/branches', [SectionController::class, 'getBranches']);
     Route::get('/themes/{branch}/create', [ThemeController::class, 'createWithBranchID'])->name('themes.branchId.create');

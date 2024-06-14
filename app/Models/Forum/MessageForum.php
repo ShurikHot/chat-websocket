@@ -2,19 +2,18 @@
 
 namespace App\Models\Forum;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Theme extends Model
+class MessageForum extends Model
 {
     use HasFactory;
-    use SoftDeletes;
 
     protected $guarded = false;
 
-    public function messages()
+    public function user()
     {
-        return $this->hasMany(MessageForum::class, 'theme_id', 'id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 }

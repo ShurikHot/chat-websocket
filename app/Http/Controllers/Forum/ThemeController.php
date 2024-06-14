@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Forum\Theme\StoreThemeRequest;
 use App\Http\Requests\Forum\Theme\UpdateThemeRequest;
 use App\Http\Resources\Forum\Branch\BranchResource;
+use App\Http\Resources\Forum\Message\MessageForumResource;
 use App\Http\Resources\Forum\Theme\ThemeResource;
 use App\Models\Forum\Branch;
 use App\Models\Forum\Theme;
@@ -52,9 +53,11 @@ class ThemeController extends Controller
      */
     public function show(Theme $theme)
     {
+        $messages = $theme->messages;
+        $messages = MessageForumResource::collection($messages)->resolve();
         $theme = ThemeResource::make($theme)->resolve();
 
-        return inertia('Forum/Theme/Show', compact('theme'));
+        return inertia('Forum/Theme/Show', compact('theme', 'messages'));
     }
 
     /**
