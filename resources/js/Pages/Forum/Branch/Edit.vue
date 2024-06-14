@@ -3,7 +3,10 @@
         <div class="w-3/4">
             <div class="text-center text-xl font-bold mb-3">
                 <div class="text-left">
-                    <div class=""><h1>Edit Branch</h1></div>
+                    <div class="flex items-center">
+                        <h1>Edit Branch </h1>
+                        <h1 class="text-red-600 ml-2"> {{ title }}</h1>
+                    </div>
                     <div class="" v-if="sections.length > 0">
                         <select @change="getBranches()" class="" v-model="section_id">
                             <option value="null" disabled>Choose the section</option>
@@ -17,7 +20,7 @@
                     <div class="" v-if="branches.length > 0">
                         <select class="" v-model="parent_id">
                             <option value="null" disabled>Choose the parent branch</option>
-                            <option v-for="branch in branches" :value="branch.id" :disabled="this.branch.id === branch.id">
+                            <option v-for="branch in branches" :value="branch.id" :hidden="this.branch.id === branch.id">
                                 {{branch.title}}
                             </option>
                         </select>

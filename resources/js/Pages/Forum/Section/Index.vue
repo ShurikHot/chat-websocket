@@ -3,8 +3,8 @@
         <div class="">
             <div class="text-xl font-bold mb-3">
                 <div class="flex items-center">
-                    <Link :href="route('sections.create')" class="bg-indigo-500 rounded-full ml-4 py-1 px-3">+ section</Link>
-                    <Link :href="route('branches.create')" class="bg-indigo-500 rounded-full ml-4 py-1 px-3">+ branch</Link>
+                    <Link :href="route('sections.create')" class="bg-indigo-300 rounded-lg ml-4 py-1 px-3">Add section</Link>
+                    <Link :href="route('branches.create')" class="bg-emerald-200 rounded-lg ml-4 py-1 px-3">Add branch</Link>
                 </div>
                 <div class="">
                     <h1 class="mt-10">Section List...</h1>

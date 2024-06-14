@@ -1,11 +1,11 @@
 <template>
     <div class="flex">
-        <div class="w-3/4">
+        <div class="w-4/6">
             <div class="text-center text-xl font-bold mb-3">
                 <h1>Chat List</h1>
             </div>
             <div class="mr-5" v-if="chats.length > 0">
-                <div class="inline-block w-full" v-for="chat in chats">
+                <div class="inline-block w-full overflow-y-auto h-[50vh]" v-for="chat in chats">
                     <Link :href="route('chats.show', chat.id)">
                         <div class="mb-3 bg-violet-50 p-3 rounded-full overflow-hidden hover:bg-violet-200">
                             <div class="flex justify-between items-center">
@@ -53,7 +53,7 @@
             <div v-else class="mb-3 mr-5 bg-violet-50 p-3 rounded-full">No chats yet...</div>
         </div>
 
-        <div class="w-1/4 border-gray-600">
+        <div class="w-2/6 border-gray-600">
             <div class="text-center text-xl font-bold mb-3">
                 <h1>Users</h1>
             </div>
@@ -81,7 +81,7 @@
 
             <div class="mb-3 mr-5 bg-violet-50 p-3 rounded-full" v-else>No users yet...</div>
 
-            <div v-if="users">
+            <div v-if="users" class=" overflow-y-auto h-[50vh]">
                 <div
                     class="flex mb-1 justify-between bg-violet-50 px-1 py-1 rounded-full hover:bg-violet-200 items-center"
                     v-for="user in users">

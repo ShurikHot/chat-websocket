@@ -7,7 +7,8 @@ use App\Http\Requests\Forum\Branch\StoreBranchRequest;
 use App\Http\Requests\Forum\Branch\UpdateBranchRequest;
 use App\Http\Resources\Forum\Branch\BranchResource;
 use App\Http\Resources\Forum\Section\SectionResource;
-use App\Models\Branch;
+use App\Http\Resources\Forum\Theme\ThemeResource;
+use App\Models\Forum\Branch;
 use App\Models\Forum\Section;
 
 class BranchController extends Controller
@@ -17,7 +18,7 @@ class BranchController extends Controller
      */
     public function index()
     {
-
+        //
     }
 
     /**
@@ -27,6 +28,7 @@ class BranchController extends Controller
     {
         $sections = Section::all();
         $sections = SectionResource::collection($sections)->resolve();
+
         return inertia('Forum/Branch/Create', compact('sections'));
     }
 
@@ -49,9 +51,12 @@ class BranchController extends Controller
         $children = $branch->children;
         $children = BranchResource::collection($children)->resolve();
 
+        $themes = $branch->themes;
+        $themes = ThemeResource::collection($themes)->resolve();
+
         $branch = BranchResource::make($branch)->resolve();
 
-        return inertia('Forum/Branch/Show', compact('branch', 'children'));
+        return inertia('Forum/Branch/Show', compact('branch', 'children', 'themes'));
     }
 
     /**
@@ -83,6 +88,7 @@ class BranchController extends Controller
     public function destroy(Branch $branch)
     {
         $branch->delete();
+
         return redirect()->back();
     }
 }

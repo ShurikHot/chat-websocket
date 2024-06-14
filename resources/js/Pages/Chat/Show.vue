@@ -1,6 +1,6 @@
 <template>
     <div class="flex">
-        <div class="w-3/4">
+        <div class="w-4/6">
             <div class="text-center text-xl font-bold mb-3">
                 <h1>{{ chat.title ?? 'Your chat' }}</h1>
             </div>
@@ -40,7 +40,7 @@
             </div>
         </div>
 
-        <div class="w-1/4">
+        <div class="w-2/6">
             <div class="text-center text-xl font-bold mb-3">
                 <h1>Users</h1>
             </div>

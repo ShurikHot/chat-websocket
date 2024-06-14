@@ -5,11 +5,9 @@ namespace App\Http\Controllers\Forum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Forum\Section\UpdateSectionRequest;
 use App\Http\Resources\Forum\Branch\BranchResource;
-use App\Http\Resources\Forum\Section\SectionResource;
 use App\Http\Resources\Forum\Section\SectionWithBranchesResource;
 use App\Models\Forum\Section;
 use App\Http\Requests\Forum\Section\StoreSectionRequest;
-use Illuminate\Support\Facades\Request;
 
 class SectionController extends Controller
 {
@@ -38,7 +36,7 @@ class SectionController extends Controller
     public function store(StoreSectionRequest $request)
     {
         $data = $request->validated();
-        $section = Section::query()->firstOrCreate($data);
+        Section::query()->firstOrCreate($data);
 
         return redirect()->route('sections.index');
     }
@@ -56,8 +54,7 @@ class SectionController extends Controller
      */
     public function edit(Section $section)
     {
-
-
+        //
     }
 
     /**

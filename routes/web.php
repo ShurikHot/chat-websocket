@@ -3,6 +3,9 @@
 use App\Http\Controllers\Chat\ChatController;
 use App\Http\Controllers\Chat\MessageController;
 use App\Http\Controllers\Chat\MessageStatusController;
+use App\Http\Controllers\Forum\BranchController;
+use App\Http\Controllers\Forum\SectionController;
+use App\Http\Controllers\Forum\ThemeController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -49,10 +52,12 @@ Route::middleware('auth')->group(function () {
 /*!!!!!!!!!!!!!  ОБНОВИТЬ КЭШ РОУТОВ  !!!!!!!!!!!!!!!!   php artisan route:cache   */
 
 Route::middleware('auth')->group(function () {
-    Route::resource('/sections', \App\Http\Controllers\Forum\SectionController::class);
-    Route::resource('/branches', \App\Http\Controllers\Forum\BranchController::class);
+    Route::resource('/sections', SectionController::class);
+    Route::resource('/branches', BranchController::class);
+    Route::resource('/themes', ThemeController::class);
 
-    Route::get('/sections/{section}/branches', [\App\Http\Controllers\Forum\SectionController::class, 'getBranches']);
+    Route::get('/sections/{section}/branches', [SectionController::class, 'getBranches']);
+    Route::get('/themes/{branch}/create', [ThemeController::class, 'createWithBranchID'])->name('themes.branchId.create');
 
 });
 
