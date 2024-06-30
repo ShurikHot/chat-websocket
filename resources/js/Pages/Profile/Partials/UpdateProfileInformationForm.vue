@@ -3,7 +3,7 @@ import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
-import {Link, useForm, usePage} from '@inertiajs/vue3';
+import { Link, useForm, usePage } from '@inertiajs/vue3';
 
 defineProps({
     mustVerifyEmail: {
@@ -12,7 +12,9 @@ defineProps({
     status: {
         type: String,
     },
-
+    avatar_url: {
+        type: String,
+    },
 });
 
 const user = usePage().props.auth.user;
@@ -24,10 +26,25 @@ const form = useForm({
     avatar_file: null,
 });
 
-const handleFileChange = (event) => {
+const avatarChange = (event) => {
     form.avatar_file = event.target.files[0];
-    /*console.log(form.avatar);
-    console.log(event.target.files[0]);*/
+};
+
+const submitForm = () => {
+    const formData = new FormData();
+
+    formData.append('name', form.name);
+    formData.append('email', form.email);
+    formData.append('avatar', form.avatar);
+    if (form.avatar_file) {
+        formData.append('avatar_file', form.avatar_file);
+    }
+    formData.append('_method', 'patch')
+
+    form.post(route('profile.update'), {
+        data: formData,
+        forceFormData: true,
+    });
 };
 </script>
 
@@ -41,7 +58,7 @@ const handleFileChange = (event) => {
             </p>
         </header>
 
-        <form @submit.prevent="form.patch(route('profile.update'))" class="mt-6 space-y-6">
+        <form @submit.prevent="submitForm" class="mt-6 space-y-6">
             <div class="flex space-x-4">
                 <div class="w-1/2">
                     <div>
@@ -111,14 +128,19 @@ const handleFileChange = (event) => {
                 </div>
 
                 <div class="w-1/2">
-                    <InputLabel for="avatar" value="Avatar" />
-                    <div class="w-[100px] h-[100px] border mx-auto">
-                        <img :src="form.avatar" alt="">
-                    </div>
-                    <div class="flex mt-3">
-                        <input type="file" @change="handleFileChange" class="px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150 mx-auto">
+                    <div class="text-center mb-1 block font-medium text-sm text-gray-700">
+                        Avatar
                     </div>
 
+                    <div class="w-40 h-40 border mx-auto mb-5 rounded-full overflow-hidden">
+                        <a href="#" @click.prevent="$refs.change.click">
+                            <img :src="avatar_url" alt="" title="Click to add/change" class="w-40 h-40">
+                        </a>
+                    </div>
+
+                    <div hidden>
+                        <input type="file" ref="change" @change="avatarChange" class="">
+                    </div>
                 </div>
             </div>
         </form>

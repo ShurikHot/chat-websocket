@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Chat\Chat\StoreRequest;
 use App\Http\Resources\Chat\Chat\ChatResource;
 use App\Http\Resources\Chat\Message\MessageResource;
-use App\Http\Resources\Chat\User\UserForumResource;
+use App\Http\Resources\Chat\User\UserResource;
 use App\Models\Chat\Chat;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
@@ -16,7 +16,7 @@ class ChatController extends Controller
     public function index()
     {
         $users = User::query()->where('id', '!=', auth()->id())->get();
-        $users = UserForumResource::collection($users)->resolve();
+        $users = UserResource::collection($users)->resolve();
 
         $chats = auth()->user()
             ->chats()
@@ -96,7 +96,7 @@ class ChatController extends Controller
             'is_read' => true
         ]);
 
-        $users = UserForumResource::collection($users)->resolve();
+        $users = UserResource::collection($users)->resolve();
 
         $chat = ChatResource::make($chat)->resolve();
         return inertia('Chat/Show', compact('chat', 'users', 'userIdsWithoutMe', 'messages', 'isLastPage'));

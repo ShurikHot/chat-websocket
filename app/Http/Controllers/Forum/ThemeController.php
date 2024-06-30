@@ -53,11 +53,27 @@ class ThemeController extends Controller
      */
     public function show(Theme $theme)
     {
-        $messages = $theme->messages;
+        $currentPage = request('page') ?? 1;
+
+        $messages = $theme->messages()
+            ->orderBy('created_at', 'asc')
+            ->paginate(10, '*', 'page', $currentPage);
+
+        $isLastPage = $messages->lastPage() == $currentPage;
+        $perPage = $messages->perPage();
+        $last = $messages->lastPage();
+
         $messages = MessageForumResource::collection($messages)->resolve();
         $theme = ThemeResource::make($theme)->resolve();
 
-        return inertia('Forum/Theme/Show', compact('theme', 'messages'));
+        return inertia('Forum/Theme/Show', compact(
+            'theme',
+            'messages',
+            'isLastPage',
+            'currentPage',
+            'last',
+            'perPage'
+        ));
     }
 
     /**

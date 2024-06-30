@@ -12,6 +12,9 @@ defineProps({
     status: {
         type: String,
     },
+    avatar_url: {
+        type: String,
+    },
 });
 </script>
 
@@ -29,6 +32,7 @@ defineProps({
                     <UpdateProfileInformationForm
                         :must-verify-email="mustVerifyEmail"
                         :status="status"
+                        :avatar_url="avatar_url"
                         class=""
                     />
                 </div>

@@ -20,6 +20,7 @@ class MessageForumResource extends JsonResource
             'content' => $this->content,
             'theme_id' => $this->theme_id,
             'user' => UserForumResource::make($this->user)->resolve(),
+            'avatar' => url('storage/' . $this->user->avatar),
             'time' => $this->created_at->format('d-m-Y'),
         ];
     }
