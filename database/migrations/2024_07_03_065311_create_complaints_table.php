@@ -11,10 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('message_user_likes', function (Blueprint $table) {
+        Schema::create('complaints', function (Blueprint $table) {
             $table->id();
             $table->foreignId('message_id')->index()->constrained('message_forums');
             $table->foreignId('user_id')->index()->constrained('users');
+            $table->foreignId('theme_id')->index()->constrained('themes');
+            $table->text('body');
+            $table->boolean('is_solved')->default(false);
             $table->timestamps();
         });
     }
@@ -24,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('message_user_likes');
+        Schema::dropIfExists('complaints');
     }
 };

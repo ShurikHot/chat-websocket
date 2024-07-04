@@ -62,6 +62,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/sections/{section}/branches', [SectionController::class, 'getBranches']);
     Route::get('/themes/{branch}/create', [ThemeController::class, 'createWithBranchID'])->name('themes.branchId.create');
+    Route::post('/fmessages/{message}/likes', [MessageForumController::class, 'like']);
+    Route::post('/fmessages/{message}/complaint', [MessageForumController::class, 'complaint']);
 
 });
 

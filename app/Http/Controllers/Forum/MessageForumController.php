@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Forum;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Forum\Complaint\StoreComplaintForumRequest;
 use App\Http\Requests\Forum\Message\StoreMessageForumRequest;
 use App\Http\Requests\Forum\Message\UpdateMessageForumRequest;
 use App\Http\Resources\Chat\Message\MessageResource;
 use App\Http\Resources\Forum\Message\MessageForumResource;
+use App\Models\Forum\Complaint;
 use App\Models\Forum\MessageForum;
 
 class MessageForumController extends Controller
@@ -70,4 +72,20 @@ class MessageForumController extends Controller
     {
         //
     }
+
+    public function like(MessageForum $message)
+    {
+        $message->likedUsers()->toggle(auth()->id());
+    }
+
+    public function complaint(StoreComplaintForumRequest $request, MessageForum $message)
+    {
+        $data = $request->validated();
+        $data['user_id'] = auth()->id();
+        $data['message_id'] = $message->id;
+
+        Complaint::query()->create($data);
+        return MessageForumResource::make($message)->resolve();
+    }
+
 }
