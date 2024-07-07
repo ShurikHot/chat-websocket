@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Admin\ComplaintController;
+use App\Http\Controllers\Admin\MainController;
+use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Chat\ChatController;
 use App\Http\Controllers\Chat\MessageController;
 use App\Http\Controllers\Chat\MessageStatusController;
@@ -64,6 +67,24 @@ Route::middleware('auth')->group(function () {
     Route::get('/themes/{branch}/create', [ThemeController::class, 'createWithBranchID'])->name('themes.branchId.create');
     Route::post('/fmessages/{message}/likes', [MessageForumController::class, 'like']);
     Route::post('/fmessages/{message}/complaint', [MessageForumController::class, 'complaint']);
+
+    Route::get('/admin', [MainController::class, 'index'])->name('admin.index');
+    Route::get('/admin/complaints', [ComplaintController::class, 'index'])->name('admin.complaints.index');
+    Route::patch('/admin/complaints/{complaint}', [ComplaintController::class, 'update'])->name('admin.complaints.update');
+
+    Route::resource('/admin/roles', RoleController::class)->names([
+        'index' => 'admin.roles.index',
+        'create' => 'admin.roles.create',
+        'store' => 'admin.roles.store',
+/*        'show' => 'admin.roles.show',*/
+        'edit' => 'admin.roles.edit',
+        'update' => 'admin.roles.update',
+        'destroy' => 'admin.roles.destroy',
+    ]);
+    /*Route::get('/admin/roles', [RoleController::class, 'index'])->name('admin.roles.index');
+    Route::get('/admin/roles/create', [RoleController::class, 'create'])->name('admin.roles.create');
+    Route::post('/admin/roles/', [RoleController::class, 'store'])->name('admin.roles.store');
+    Route::get('/admin/roles/{roles}/edit', [RoleController::class, 'edit'])->name('admin.roles.edit');*/
 
 });
 

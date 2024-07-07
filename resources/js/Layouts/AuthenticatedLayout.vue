@@ -10,6 +10,16 @@ import { Link } from '@inertiajs/vue3';
 const showingNavigationDropdown = ref(false);
 </script>
 
+<script>
+export default {
+    methods: {
+        isActive(routeParts) {
+            return routeParts.some(routePart => this.route().current().startsWith(routePart));
+        },
+    }
+}
+</script>
+
 <template>
     <div>
         <div class="min-h-screen bg-gray-100">
@@ -33,13 +43,20 @@ const showingNavigationDropdown = ref(false);
                                     Dashboard
                                 </NavLink>
 
-                                <NavLink :href="route('chats.index')" :active="route().current('chats.index')">
+                                <NavLink :href="route('chats.index')" :active="isActive(['chats'])">
                                     Chats
                                 </NavLink>
 
-                                <NavLink :href="route('sections.index')" :active="route().current('sections.index')">
+                                <NavLink :href="route('sections.index')" :active="isActive(['sections', 'branches', 'themes', 'fmessages'])">
                                     Forum
                                 </NavLink>
+
+                                <div class="flex" v-if="$page.props.auth.user.role !== 'admin'">
+                                    <NavLink :href="route('admin.index')" :active="isActive(['admin'])">
+                                        Admin Panel
+                                    </NavLink>
+                                </div>
+
                             </div>
                         </div>
 

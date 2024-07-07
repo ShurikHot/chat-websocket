@@ -14,7 +14,7 @@
                     <div class="mt-5" v-if="messages.length > 0">
                         <h1>Messages</h1>
 
-                        <div class="" v-for="message in messages">
+                        <div class="" v-for="message in messages" :id="message.id">
                             <div class="text-sm mx-3 mb-1 flex items-center justify-between">
                                 <div class="flex items-center">
                                     <div class="w-10 h-10 ">

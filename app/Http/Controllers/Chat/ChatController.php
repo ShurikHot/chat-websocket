@@ -79,7 +79,7 @@ class ChatController extends Controller
         $messages = $chat->messages()
             ->with('user')
             ->orderBy('created_at', 'desc')
-            ->paginate(5, '*', 'page', $page);
+            ->paginate(config('constants.CHAT_PAGINATION', 5), '*', 'page', $page);
 
         $isLastPage = $messages->lastPage() == $page;
 
