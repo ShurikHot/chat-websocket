@@ -16,7 +16,7 @@ class SectionController extends Controller
      */
     public function index()
     {
-        $sections = Section::query()->with('branches')->get();
+        $sections = Section::query()->with('parentBranches')->get();
         $sections = SectionWithBranchesResource::collection($sections)->resolve();
 
         return inertia('Forum/Section/Index', compact('sections'));
@@ -27,6 +27,7 @@ class SectionController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', Section::class);
         return inertia('Forum/Section/Create');
     }
 
@@ -35,6 +36,7 @@ class SectionController extends Controller
      */
     public function store(StoreSectionRequest $request)
     {
+        $this->authorize('create', Section::class);
         $data = $request->validated();
         Section::query()->firstOrCreate($data);
 
@@ -62,6 +64,7 @@ class SectionController extends Controller
      */
     public function update(UpdateSectionRequest $request, Section $section)
     {
+        $this->authorize('update', $section);
         $data = $request->validated();
         $section->update($data);
 
@@ -73,6 +76,7 @@ class SectionController extends Controller
      */
     public function destroy(Section $section)
     {
+        $this->authorize('delete', $section);
         $section->delete();
         return redirect()->back();
     }

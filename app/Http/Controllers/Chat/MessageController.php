@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Chat;
 
-use App\Events\StoreMessageEvent;
+use App\Events\Chat\StoreMessageEvent;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Chat\Message\StoreRequest;
 use App\Http\Resources\Chat\Message\MessageResource;

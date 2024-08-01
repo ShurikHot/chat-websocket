@@ -57,13 +57,13 @@ class ThemeController extends Controller
 
         $messages = $theme->messages()
             ->orderBy('created_at', 'asc')
-            ->paginate(10, '*', 'page', $currentPage);
+            ->paginate(config('constants.FORUM_PAGINATION', 10), '*', 'page', $currentPage);
 
         $isLastPage = $messages->lastPage() == $currentPage;
         $perPage = $messages->perPage();
         $last = $messages->lastPage();
 
-        $messages = MessageForumResource::collection($messages)->resolve();
+        $messages = MessageForumResource::collection($messages->load('user'))->resolve();
         $theme = ThemeResource::make($theme)->resolve();
 
         return inertia('Forum/Theme/Show', compact(

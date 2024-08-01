@@ -59,10 +59,7 @@ class ChatController extends Controller
             DB::rollBack();
         }
 
-        /*$chat = ChatResource::make($chat)->resolve();
-        return inertia('Chat/Show', compact('chat'));*/  //заменяем на...
         return redirect()->route('chats.show', $chat->id);
-
     }
 
     public function show(Chat $chat)

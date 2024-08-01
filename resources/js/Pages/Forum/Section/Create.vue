@@ -6,15 +6,14 @@
                     <div class=""><h1>Create Section</h1></div>
                     <div class="">
                         <div class="flex items-center">
-                            <input v-model="title" placeholder="Enter section title" class="mx-2">
-                            <a @click.prevent="store()" class="bg-indigo-500 rounded-full py-1 px-3" href="#">Create</a>
+                            <input v-model="title" placeholder="Enter section title" class="mr-2 rounded-lg w-1/2">
+                            <a @click.prevent="store()" class="bg-indigo-500 rounded-lg py-1 px-3" href="#">Create</a>
                         </div>
                         <div class="">
                             <div class="text-xs text-red-600" v-if="this.$page.props.errors.title">
                                 {{ this.$page.props.errors.title }}
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -32,10 +31,6 @@ export default {
     components: {
         Link
     },
-
-    props: [
-
-    ],
 
     data() {
         return {

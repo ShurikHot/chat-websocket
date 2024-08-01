@@ -21,7 +21,7 @@ class MessageForumResource extends JsonResource
             'theme_id' => $this->theme_id,
             'user' => UserForumResource::make($this->user)->resolve(),
             'avatar' => url('storage/' . $this->user->avatar),
-            'time' => $this->created_at->format('d-m-Y'),
+            'time' => $this->created_at->format('d-m-Y - H:m'),
             'is_liked' => $this->is_liked,
             'is_solved' => !($this->isNotSolvedComplaint->count() > 0),
             'liked_users' => UserForumResource::collection($this->likedUsers)->resolve(),

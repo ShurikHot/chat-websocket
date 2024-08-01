@@ -2,14 +2,17 @@
 
 namespace App\Http\Controllers\Forum;
 
+use App\Events\Forum\StoreMessageEvent;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Forum\Complaint\StoreComplaintForumRequest;
+use App\Http\Requests\Forum\Message\AnswerNotificationRequest;
 use App\Http\Requests\Forum\Message\StoreMessageForumRequest;
 use App\Http\Requests\Forum\Message\UpdateMessageForumRequest;
-use App\Http\Resources\Chat\Message\MessageResource;
 use App\Http\Resources\Forum\Message\MessageForumResource;
 use App\Models\Forum\Complaint;
 use App\Models\Forum\MessageForum;
+use App\Service\NotificationService;
+use App\Service\PaginationService;
 
 class MessageForumController extends Controller
 {
@@ -37,6 +40,8 @@ class MessageForumController extends Controller
         $data = $request->validated();
         $data['user_id'] = auth()->id();
         $message = MessageForum::query()->create($data);
+
+        event(new StoreMessageEvent($message));
 
         return MessageForumResource::make($message)->resolve();
     }
@@ -75,7 +80,13 @@ class MessageForumController extends Controller
 
     public function like(MessageForum $message)
     {
-        $message->likedUsers()->toggle(auth()->id());
+        $page = PaginationService::page($message->id, $message->theme_id);
+
+        $result = $message->likedUsers()->toggle(auth()->id());
+
+        if ($result['attached']) {
+            NotificationService::store($message, $page, 'Your message has been liked!');
+        }
     }
 
     public function complaint(StoreComplaintForumRequest $request, MessageForum $message)
@@ -84,8 +95,23 @@ class MessageForumController extends Controller
         $data['user_id'] = auth()->id();
         $data['message_id'] = $message->id;
 
+        $page = PaginationService::page($message->id, $message->theme_id);
+
         Complaint::query()->create($data);
+
+        NotificationService::store($message, $page, 'Your message was complainted!');
+
         return MessageForumResource::make($message)->resolve();
+    }
+
+    public function answerNotification(AnswerNotificationRequest $request)
+    {
+        $data = $request->validated();
+
+        $page = PaginationService::page($data['id'], $data['theme_id']);
+        $message = (object)$data;
+
+        NotificationService::store($message, $page, 'Your message was answered!');
     }
 
 }

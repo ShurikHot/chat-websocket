@@ -76,6 +76,7 @@ class BranchController extends Controller
      */
     public function update(UpdateBranchRequest $request, Branch $branch)
     {
+        $this->authorize('update', $branch);
         $data = $request->validated();
         $branch->update($data);
 
@@ -87,6 +88,7 @@ class BranchController extends Controller
      */
     public function destroy(Branch $branch)
     {
+        $this->authorize('delete', $branch);
         $branch->delete();
 
         return redirect()->back();

@@ -90,10 +90,11 @@
                             <input @click="toogleUsers(user.id)" type="checkbox" class="rounded-sm ml-1 mr-2">
                         </div>
 
-                        <div class="">
-                            <p class="mr-2 bg-emerald-100 rounded-full px-2 ">
+                        <div class="flex items-center">
+                            <p class="mr-1 bg-emerald-100 rounded-full px-2 ">
                                 <span class="text-xs">id</span>{{ user.id }}
                             </p>
+                            <img :src="user.avatar" alt="" class="mr-2 w-5 h-5">
                         </div>
 
                         <div class="">

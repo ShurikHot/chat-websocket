@@ -47,10 +47,11 @@
             <div v-if="users" class="overflow-y-auto h-[50vh]">
                 <div class="flex mb-1 justify-between bg-violet-50 px-1 py-1 rounded-full" v-for="user in users">
                     <div class="flex overflow-hidden">
-                        <div class="">
+                        <div class="flex items-center">
                             <p class="mr-2 bg-emerald-100 rounded-full px-2 ">
                                 <span class="text-xs">id</span>{{user.id}}
                             </p>
+                            <img :src="user.avatar" alt="" class="mr-2 w-5 h-5">
                         </div>
 
                         <div class="">

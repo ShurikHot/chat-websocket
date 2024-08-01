@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Admin\Role;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -33,6 +34,8 @@ class HandleInertiaRequests extends Middleware
             ...parent::share($request),
             'auth' => [
                 'user' => $request->user(),
+                'roles' => $request->user() ? $request->user()->roles()->get()->pluck('code')->toArray() : null,
+                'notifications' => $request->user() ? $request->user()->notifications()->get() : null,
             ],
         ];
     }

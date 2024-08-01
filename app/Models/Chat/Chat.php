@@ -40,5 +40,4 @@ class Chat extends Model
             ->where('user_id', auth()->id())
             ->where('is_read', false);
     }
-
 }

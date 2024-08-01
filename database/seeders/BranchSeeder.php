@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Forum\Branch;
-use Database\Factories\Forum\BranchFactory;
 use Illuminate\Database\Seeder;
 
 class BranchSeeder extends Seeder

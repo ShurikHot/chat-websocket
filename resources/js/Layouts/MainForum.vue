@@ -11,10 +11,7 @@ const currentRoute = page.url;
     <Head title="Forum"/>
     <AuthenticatedLayout>
         <template #header>
-            <div class="" v-if="currentRoute === '/profile/avatar'">
-                <h2 class="font-semibold text-xl text-gray-800 leading-tight">Profile</h2>
-            </div>
-            <div class="" v-else>
+            <div class="">
                 <h2 class="font-semibold text-xl text-gray-800 leading-tight">Forum</h2>
             </div>
         </template>

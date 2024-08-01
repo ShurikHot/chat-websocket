@@ -1,14 +1,14 @@
 <template>
-    <div class="flex">
-        <div class="w-3/4">
-            <div class="text-center text-xl font-bold mb-3">
-                <div class="text-left">
-                    <div class="flex items-center">
-                        <h1>Edit Role </h1>
-                        <h1 class="text-red-600 ml-2"> {{ old_title }}</h1>
-                    </div>
+    <div class="flex items-center justify-center mx-2 text-xl font-bold">
+        <h1>Edit Role </h1>
+        <h1 class="text-red-600 ml-2"> {{ old_title }}</h1>
+    </div>
+    <div class="flex m-2">
+        <div class="">
+            <div class="text-xl font-bold mb-3">
+                <div class="">
                     <div class="" v-if="sections.length > 0">
-                        <select @change="getBranches()" class="" v-model="section_id">
+                        <select @change="getBranchesWhenChange()" class="mb-1 rounded-lg" v-model="section_id">
                             <option value="null" disabled>Choose the section</option>
                             <option v-for="section in sections" :value="section.id" :selected="this.section_id === section.id">
                                 {{section.title}}
@@ -20,7 +20,7 @@
                     </div>
 
                     <div class="" v-if="branches.length > 0">
-                        <select class="" v-model="branch_id">
+                        <select class="mb-1 rounded-lg" v-model="branch_id">
                             <option value="null" disabled>Choose the branch</option>
                             <option v-for="branch in branches" :value="branch.id" :selected="branch_id === branch.id">
                                 {{branch.title}}
@@ -33,9 +33,14 @@
 
                     <div class="">
                         <div class="flex items-center">
-                            <input v-model="title" placeholder="Enter branch title" class="">
+                            <select v-model="title" class="mb-1 rounded-lg">
+                                <option disabled value="">Choose role title</option>
+                                <option v-for="role in baseRoles">
+                                    {{ role }}
+                                </option>
+                            </select>
                             <a @click.prevent="update(branch_id)"
-                               :class="['bg-indigo-500 rounded-full py-1 px-3',
+                               :class="['bg-indigo-500 rounded-lg py-1 px-3 ml-2',
                                title === '' ? 'opacity-50 cursor-not-allowed' : ''
                             ]" href="#"
                                :disabled="title === ''">
@@ -68,12 +73,13 @@ export default {
 
     props: [
         'sections',
-        'role_data'
+        'role_data',
+        'baseRoles'
     ],
 
     data() {
         return {
-            old_title: this.role_data[0],
+            old_title: Object.values(this.role_data).slice(0, -1).join('.'),
             title: this.role_data[0],
             section_id: this.role_data[1],
             branch_id: this.role_data[2],
@@ -82,25 +88,29 @@ export default {
     },
 
     mounted() {
-        this.getBranches();
-        // console.log(this.branch_id);
-        // console.log(this.role_data.id);
-        /*this.parent_id = this.branch.parent_id*/
+        if (this.section_id) this.getBranchesMount();
     },
 
     methods: {
         update(branchId) {
-            console.log(branchId);
+            if (this.title === 'Admin') {
+                this.section_id = null
+                this.branch_id = null
+            }
             this.$inertia.patch('/admin/roles/' + this.role_data.id, {title: this.title, section_id: this.section_id, branch_id: this.branch_id});
         },
 
-        getBranches() {
+        getBranchesMount() {
             axios.get('/sections/' + this.section_id + '/branches')
                 .then(res => {
                     this.branches = res.data
-                    /*if (res.data.length === 0) this.branch_id = null*/
                 })
             ;
+        },
+
+        getBranchesWhenChange() {
+            this.getBranchesMount()
+            this.branch_id = null
         },
     },
 

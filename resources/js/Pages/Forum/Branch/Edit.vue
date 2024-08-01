@@ -1,6 +1,6 @@
 <template>
     <div class="flex">
-        <div class="w-3/4">
+        <div class="w-full">
             <div class="text-center text-xl font-bold mb-3">
                 <div class="text-left">
                     <div class="flex items-center">
@@ -8,7 +8,7 @@
                         <h1 class="text-red-600 ml-2"> {{ title }}</h1>
                     </div>
                     <div class="" v-if="sections.length > 0">
-                        <select @change="getBranches()" class="" v-model="section_id">
+                        <select @change="getBranches()" class="mb-1 rounded-lg" v-model="section_id">
                             <option value="null" disabled>Choose the section</option>
                             <option v-for="section in sections" :value="section.id">{{section.title}}</option>
                         </select>
@@ -18,7 +18,7 @@
                     </div>
 
                     <div class="" v-if="branches.length > 0">
-                        <select class="" v-model="parent_id">
+                        <select class="mb-1 rounded-lg" v-model="parent_id">
                             <option value="null" disabled>Choose the parent branch</option>
                             <option v-for="branch in branches" :value="branch.id" :disabled="this.branch.id === branch.id">
                                 {{branch.title}}
@@ -31,9 +31,9 @@
 
                     <div class="">
                         <div class="flex items-center">
-                            <input v-model="title" placeholder="Enter branch title" class="">
+                            <input v-model="title" placeholder="Enter branch title" class="rounded-lg w-1/2">
                             <a @click.prevent="update()"
-                               :class="['bg-indigo-500 rounded-full py-1 px-3',
+                               :class="['bg-indigo-500 rounded-lg py-1 px-3 ml-2',
                                section_id == null ? 'opacity-50 cursor-not-allowed' : ''
                             ]" href="#"
                                :disabled="section_id == null">
@@ -75,7 +75,6 @@ export default {
             section_id: this.branch.section_id,
             parent_id: null,
             branches: [],
-
         }
     },
 
@@ -94,8 +93,7 @@ export default {
             axios.get('/sections/' + this.section_id + '/branches')
                 .then(res => {
                     this.branches = res.data
-                })
-            ;
+                });
         },
     },
 

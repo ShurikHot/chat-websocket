@@ -1,29 +1,25 @@
 <template>
     <div class="">
-        <div class="">
+        <div class="text-center mx-2 text-xl font-bold">
             Roles list
         </div>
-        <div class="flex items-center">
-            <Link :href="route('admin.roles.create')" class="bg-indigo-300 rounded-lg ml-4 py-1 px-3">Add role</Link>
-        </div>
-
-        <div class="">
-            <table class="border table w-full">
+        <div class="m-2">
+            <table class="border border-separate border-slate-400 table w-full text-center">
                 <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Title</th>
-                    <th>Code</th>
-                    <th>Actions</th>
+                    <th class="border border-slate-400">ID</th>
+                    <th class="border border-slate-400">Title</th>
+                    <th class="border border-slate-400">Code</th>
+                    <th class="border border-slate-400">Actions</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr v-for="role in roles">
-                    <td>{{ role.id }}</td>
-                    <td>{{ role.title }}</td>
-                    <td>{{ role.code }}</td>
-                    <td>
-                        <div class="flex">
+                    <td class="border border-slate-400">{{ role.id }}</td>
+                    <td class="border border-slate-400">{{ role.title }}</td>
+                    <td class="border border-slate-400">{{ role.code }}</td>
+                    <td class="border border-slate-400">
+                        <div class="flex justify-center">
                             <Link :href="route('admin.roles.edit', role.id)" class="mr-3">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="red" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4 ml-3">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
@@ -35,20 +31,21 @@
                                 </svg>
                             </Link>
                         </div>
-
                     </td>
                 </tr>
                 </tbody>
             </table>
         </div>
 
+        <div class="flex items-center">
+            <Link :href="route('admin.roles.create')" class="bg-indigo-300 rounded-lg ml-4 mb-2 py-1 px-3">Add role</Link>
+        </div>
     </div>
 </template>
 
 <script>
 import {Link} from "@inertiajs/vue3";
 import AdminLayout from "@/Layouts/AdminLayout.vue";
-import axios from "axios";
 
 export default {
     name: "Index",
@@ -60,21 +57,6 @@ export default {
     props: [
         'roles'
     ],
-
-    data() {
-        return {
-
-        }
-    },
-
-    /*mounted() {
-        console.log(this.complaints);
-    },
-*/
-
-    methods: {
-
-    },
 
     layout: AdminLayout
 }

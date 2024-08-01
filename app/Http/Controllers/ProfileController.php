@@ -38,8 +38,8 @@ class ProfileController extends Controller
         }
 
         if ($request->avatar_file) {
-            $avatarPath = auth()->user()->avatar;
-            if (Storage::disk('public')->exists($avatarPath)) {
+            $avatarPath = auth()->user()->avatar ?? '';
+            if (Storage::disk('public')->exists($avatarPath) && ($avatarPath !== 'avatars/default_avatar.png')) {
                 Storage::disk('public')->delete($avatarPath);
             }
 

@@ -2,7 +2,7 @@
 
 namespace App\Jobs;
 
-use App\Events\StoreMessageStatusEvent;
+use App\Events\Chat\StoreMessageStatusEvent;
 use App\Models\Chat\MessageStatus;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;

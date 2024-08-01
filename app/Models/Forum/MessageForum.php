@@ -33,6 +33,4 @@ class MessageForum extends Model
                 ->where('user_id', auth()->id())
                 ->where('is_solved', false);
     }
-
-
 }

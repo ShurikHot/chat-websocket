@@ -1,31 +1,28 @@
 <?php
 
-namespace App\Events;
+namespace App\Events\Forum;
 
-use App\Http\Resources\Chat\Message\MessageResource;
+use App\Http\Resources\Forum\Message\MessageForumResource;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
+use Illuminate\Broadcasting\PresenceChannel;
+use Illuminate\Broadcasting\PrivateChannel;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class StoreMessageStatusEvent implements ShouldBroadcastNow
+class StoreMessageEvent implements ShouldBroadcastNow
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    private $count;
-    private $user_id;
-    private $chat_id;
     private $message;
 
     /**
      * Create a new event instance.
      */
-    public function __construct($count, $user_id, $chat_id, $message)
+    public function __construct($message)
     {
-        $this->count = $count;
-        $this->user_id = $user_id;
-        $this->chat_id = $chat_id;
         $this->message = $message;
     }
 
@@ -37,7 +34,7 @@ class StoreMessageStatusEvent implements ShouldBroadcastNow
     public function broadcastOn(): array
     {
         return [
-            new Channel('users-channel.' . $this->user_id),
+            new Channel('store-forum-message.' . $this->message->theme_id),
         ];
     }
 
@@ -46,7 +43,7 @@ class StoreMessageStatusEvent implements ShouldBroadcastNow
      */
     public function broadcastAs(): string
     {
-        return 'store-message-status-broadcast-name';
+        return 'store-forum-message-broadcast-name';
     }
 
     /**
@@ -57,9 +54,7 @@ class StoreMessageStatusEvent implements ShouldBroadcastNow
     public function broadcastWith(): array
     {
         return [
-            'count' => $this->count,
-            'chat_id' => $this->chat_id,
-            'message' => MessageResource::make($this->message)->resolve(),
+            'message' => MessageForumResource::make($this->message)->resolve()
         ];
     }
 }

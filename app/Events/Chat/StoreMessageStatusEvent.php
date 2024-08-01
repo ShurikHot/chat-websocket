@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Events;
+namespace App\Events\Chat;
 
 use App\Http\Resources\Chat\Message\MessageResource;
 use Illuminate\Broadcasting\Channel;
@@ -9,17 +9,23 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class StoreMessageEvent implements ShouldBroadcastNow
+class StoreMessageStatusEvent implements ShouldBroadcastNow
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+    private $count;
+    private $user_id;
+    private $chat_id;
     private $message;
 
     /**
      * Create a new event instance.
      */
-    public function __construct($message)
+    public function __construct($count, $user_id, $chat_id, $message)
     {
+        $this->count = $count;
+        $this->user_id = $user_id;
+        $this->chat_id = $chat_id;
         $this->message = $message;
     }
 
@@ -31,7 +37,7 @@ class StoreMessageEvent implements ShouldBroadcastNow
     public function broadcastOn(): array
     {
         return [
-            new Channel('store-message-channel.' . $this->message->chat_id),
+            new Channel('users-channel.' . $this->user_id),
         ];
     }
 
@@ -40,7 +46,7 @@ class StoreMessageEvent implements ShouldBroadcastNow
      */
     public function broadcastAs(): string
     {
-        return 'store-message-broadcast-name';
+        return 'store-message-status-broadcast-name';
     }
 
     /**
@@ -51,7 +57,9 @@ class StoreMessageEvent implements ShouldBroadcastNow
     public function broadcastWith(): array
     {
         return [
-            'message' => MessageResource::make($this->message)->resolve()
+            'count' => $this->count,
+            'chat_id' => $this->chat_id,
+            'message' => MessageResource::make($this->message)->resolve(),
         ];
     }
 }

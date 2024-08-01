@@ -2,6 +2,7 @@
 
 namespace Database\Factories\Forum;
 
+use App\Models\Forum\Branch;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,8 +17,12 @@ class ThemeFactory extends Factory
      */
     public function definition(): array
     {
+        $branch_id = Branch::query()->inRandomOrder()->first()->id;
+
         return [
-            //
+            'title' => fake()->text(50),
+            'description' =>  fake()->text(100),
+            'branch_id' => $branch_id,
         ];
     }
 }

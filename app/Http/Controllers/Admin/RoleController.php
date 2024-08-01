@@ -6,13 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Role\StoreRoleRequest;
 use App\Http\Requests\Admin\Role\UpdateRoleRequest;
 use App\Http\Resources\Admin\RoleResource;
-use App\Http\Resources\Forum\Branch\BranchResource;
 use App\Http\Resources\Forum\Section\SectionResource;
 use App\Models\Admin\Role;
-use App\Models\Forum\Branch;
 use App\Models\Forum\Section;
-use http\Exception;
-use Illuminate\Http\Request;
 
 class RoleController extends Controller
 {
@@ -20,19 +16,19 @@ class RoleController extends Controller
         $roles = Role::all();
         $roles = RoleResource::collection($roles)->resolve();
 
-        return inertia('Admin/Roles/Index', compact('roles'));
+        return inertia('Admin/Role/Index', compact('roles'));
     }
 
     public function create(){
         $sections = Section::all();
         $sections = SectionResource::collection($sections)->resolve();
+        $baseRoles = config('constants.BASE_ROLES');
 
-        return inertia('Admin/Roles/Create', compact('sections'));
+        return inertia('Admin/Role/Create', compact('sections', 'baseRoles'));
     }
 
     public function store(StoreRoleRequest $request){
         $data = $request->validated();
-
         $code = $this->roleCodePrepare($data);
 
         Role::query()->firstOrCreate([
@@ -46,19 +42,16 @@ class RoleController extends Controller
     public function edit(Role $role){
         $sections = Section::all();
         $sections = SectionResource::collection($sections)->resolve();
-
         $role_data = explode('.', $role['code']);
         $role_data['id'] = $role['id'];
+        $baseRoles = config('constants.BASE_ROLES');
 
-        return inertia('Admin/Roles/Edit', compact('sections', 'role_data'));
+        return inertia('Admin/Role/Edit', compact('sections', 'role_data', 'baseRoles'));
     }
 
     public function update(UpdateRoleRequest $request, Role $role){
         $data = $request->validated();
-
         $code = $this->roleCodePrepare($data);
-
-        dd($data);
 
         $role->update([
             'title' => $data['title'],
@@ -69,7 +62,9 @@ class RoleController extends Controller
     }
 
     public function destroy(Role $role){
-        dd($role);
+        $role->delete();
+
+        return redirect()->route('admin.roles.index');
     }
 
     public function roleCodePrepare($data){

@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import {computed, ref} from 'vue';
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
@@ -11,10 +11,43 @@ const showingNavigationDropdown = ref(false);
 </script>
 
 <script>
+import {computed} from "vue";
+
 export default {
+    created() {
+        window.Echo.channel('notifications.' + this.$page.props.auth.user.id)
+            .listen('.notifications-broadcast-name', res => {
+                this.notifications.push(res.notification)
+            });
+    },
+
+    data() {
+        return {
+            notifications: this.$page.props.auth.notifications
+        }
+    },
+
     methods: {
         isActive(routeParts) {
             return routeParts.some(routePart => this.route().current().startsWith(routePart));
+        },
+
+        isAdminRole() {
+            return this.$page.props.auth.roles.some( code => {
+                return [
+                    'Admin',
+                ].includes(code);
+            })
+        },
+
+        toggleNotification() {
+            this.$refs.notifications.hidden = !this.$refs.notifications.hidden
+            if (!this.$refs.notifications.hidden) {
+                const ids = this.notifications.map(item => item.id);
+                axios.patch(route('notifications.update'), {ids: ids});
+            } else {
+                this.notifications.length = 0;
+            }
         },
     }
 }
@@ -51,7 +84,7 @@ export default {
                                     Forum
                                 </NavLink>
 
-                                <div class="flex" v-if="$page.props.auth.user.role !== 'admin'">
+                                <div class="flex" v-if="isAdminRole()">
                                     <NavLink :href="route('admin.index')" :active="isActive(['admin'])">
                                         Admin Panel
                                     </NavLink>
@@ -60,9 +93,33 @@ export default {
                             </div>
                         </div>
 
-                        <div class="hidden sm:flex sm:items-center sm:ms-6">
+                        <div class="hidden sm:flex sm:items-center sm:ms-6 w-2/6">
                             <!-- Settings Dropdown -->
-                            <div class="ms-3 relative">
+                            <div class="ms-3 relative flex items-center w-full justify-end">
+
+                                <div v-if="notifications.length">
+                                    <a href="#" @click.prevent="toggleNotification()">
+                                        <div class="flex items-center ml-1 relative border px-2 py-1 rounded-full bg-red-100">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="red" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0M3.124 7.5A8.969 8.969 0 0 1 5.292 3m13.416 0a8.969 8.969 0 0 1 2.168 4.5" />
+                                            </svg>
+
+                                            <span class="text-xs">
+                                                {{notifications.length}}
+                                            </span>
+                                        </div>
+                                    </a>
+                                </div>
+
+                                <div :hidden="true" ref="notifications" class="absolute top-12 border bg-white rounded-xl p-2">
+                                    <template v-for="notification in $page.props.auth.notifications">
+                                        <div class="flex justify-between text-xs">
+                                            <a :href="notification.url">{{notification.title}}</a>
+                                            <a :href="notification.url" class="text-xs ml-2 text-red-500">Go to page</a>
+                                        </div>
+                                    </template>
+                                </div>
+
                                 <Dropdown align="right" width="48">
                                     <template #trigger>
                                         <span class="inline-flex rounded-md">
@@ -71,7 +128,6 @@ export default {
                                                 class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
                                             >
                                                 {{ $page.props.auth.user.name }}
-
                                                 <svg
                                                     class="ms-2 -me-0.5 h-4 w-4"
                                                     xmlns="http://www.w3.org/2000/svg"

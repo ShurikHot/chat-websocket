@@ -19,6 +19,7 @@ class ThemeResource extends JsonResource
             'title' => $this->title,
             'description' => $this->description,
             'branch_id' => $this->branch_id,
+            'auth_user_avatar' => url('storage/' . auth()->user()->avatar),
         ];
     }
 }

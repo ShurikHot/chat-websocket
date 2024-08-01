@@ -5,9 +5,15 @@
                 <div class="text-left">
                     <div class=""><h1>Create Branch</h1></div>
                     <div class="" v-if="sections.length > 0">
-                        <select @change="getBranches()" class="" v-model="section_id">
+                        <select @change="getBranches()" class="mb-1 rounded-lg" v-model="section_id">
                             <option value="null" selected disabled>Choose the section</option>
-                            <option v-for="section in sections" :value="section.id">{{section.title}}</option>
+                            <template v-for="section in sections">
+                                <template v-if="isSectionRole(section.id)">
+                                    <option :value="section.id">
+                                        {{section.title}}
+                                    </option>
+                                </template>
+                            </template>
                         </select>
                     </div>
                     <div class="text-xs text-red-600" v-if="this.$page.props.errors.section_id">
@@ -15,9 +21,15 @@
                     </div>
 
                     <div class="" v-if="branches.length > 0">
-                        <select class="" v-model="parent_id">
+                        <select class="mb-1 rounded-lg" v-model="parent_id">
                             <option value="null" selected disabled>Choose the branch</option>
-                            <option v-for="branch in branches" :value="branch.id">{{branch.title}}</option>
+                            <template v-for="branch in branches">
+                                <template v-if="isSectionBranchRole(section_id, branch.id)">
+                                    <option :value="branch.id">
+                                        {{branch.title}}
+                                    </option>
+                                </template>
+                            </template>
                         </select>
                     </div>
                     <div class="text-xs text-red-600" v-if="this.$page.props.errors.parent_id">
@@ -26,10 +38,10 @@
 
                     <div class="">
                         <div class="flex items-center">
-                            <input v-model="title" placeholder="Enter branch title" class="">
+                            <input v-model="title" placeholder="Enter branch title" class="rounded-lg w-1/2">
                             <a @click.prevent="store()"
-                               :class="['bg-indigo-500 rounded-full py-1 px-3',
-                               section_id == null ? 'opacity-50 cursor-not-allowed' : ''
+                               :class="['bg-indigo-500 rounded-lg py-1 px-3 ml-2',
+                               section_id == null || title === '' ? 'opacity-50 cursor-not-allowed' : ''
                             ]" href="#"
                                :disabled="section_id == null">
                                 Create
@@ -40,7 +52,6 @@
                         <div class="text-xs text-red-600" v-if="this.$page.props.errors.title">
                             {{ this.$page.props.errors.title }}
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -70,7 +81,6 @@ export default {
             section_id: null,
             parent_id: null,
             branches: [],
-
         }
     },
 
@@ -84,8 +94,26 @@ export default {
             axios.get('/sections/' + this.section_id + '/branches')
                 .then(res => {
                     this.branches = res.data
-                })
-            ;
+                })            ;
+        },
+
+        isSectionRole(section_id) {
+            return this.$page.props.auth.roles.some( code => {
+                return [
+                    'Admin',
+                    `Editor.${section_id}`,
+                ].includes(code);
+            })
+        },
+
+        isSectionBranchRole(section_id, branch_id) {
+            return this.$page.props.auth.roles.some( code => {
+                return [
+                    'Admin',
+                    `Editor.${section_id}`,
+                    `Editor.${section_id}.${branch_id}`,
+                ].includes(code);
+            })
         },
     },
 

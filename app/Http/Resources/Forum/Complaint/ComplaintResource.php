@@ -3,7 +3,6 @@
 namespace App\Http\Resources\Forum\Complaint;
 
 use App\Http\Resources\Chat\User\UserResource;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
