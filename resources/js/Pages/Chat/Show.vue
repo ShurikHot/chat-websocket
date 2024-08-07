@@ -1,7 +1,7 @@
 <template>
     <div class="flex">
         <div class="w-4/6">
-            <div class="text-center text-xl font-bold mb-3">
+            <div class="text-center text-xl font-bold mb-3 overflow-hidden">
                 <h1>{{ chat.title ?? 'Your chat' }}</h1>
             </div>
             <div class="mr-5">
@@ -28,7 +28,7 @@
                 <div class="">
                     <div class="">
                         <div class="">
-                            <input class="my-3 w-full rounded-full" type="text" placeholder="Your message" v-model="body">
+                            <input class="my-3 w-full rounded-full" type="text" placeholder="Your message" ref="message" v-model="body">
                         </div>
                         <div class="">
                             <a @click.prevent="store()" href=""
@@ -54,7 +54,7 @@
                             <img :src="user.avatar" alt="" class="mr-2 w-5 h-5">
                         </div>
 
-                        <div class="">
+                        <div class="overflow-hidden max-w-[30vh]">
                             <p class="">{{user.name}}</p>
                         </div>
                     </div>
@@ -111,6 +111,7 @@ export default {
                 .then(res => {
                     this.messages.unshift(res.data);
                     this.body = '';
+                    this.$refs.message.focus()
                 })
             ;
         },

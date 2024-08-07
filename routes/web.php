@@ -91,5 +91,4 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::post('/admin/users/{user}/role/', [UserController::class, 'toggleRole'])->name('admin.users.toggle');
 });
 
-
 require __DIR__.'/auth.php';

@@ -4,8 +4,8 @@
             <div class="text-center text-xl font-bold mb-3">
                 <h1>Chat List</h1>
             </div>
-            <div class="mr-5" v-if="chats.length > 0">
-                <div class="inline-block w-full overflow-y-auto h-[50vh]" v-for="chat in chats">
+            <div class="mr-5 h-[50vh]" v-if="chats.length > 0">
+                <div class="inline-block w-full overflow-y-auto" v-for="chat in chats">
                     <Link :href="route('chats.show', chat.id)">
                         <div class="mb-3 bg-violet-50 p-3 rounded-full overflow-hidden hover:bg-violet-200">
                             <div class="flex justify-between items-center">
@@ -83,7 +83,7 @@
 
             <div v-if="users" class=" overflow-y-auto h-[50vh]">
                 <div
-                    class="flex mb-1 justify-between bg-violet-50 px-1 py-1 rounded-full hover:bg-violet-200 items-center"
+                    class="flex mb-1 justify-between bg-violet-50 px-1 py-1 rounded-lg hover:bg-violet-200 items-center"
                     v-for="user in users">
                     <div class="flex overflow-hidden">
                         <div v-if="isGroup" class="">
@@ -91,14 +91,14 @@
                         </div>
 
                         <div class="flex items-center">
-                            <p class="mr-1 bg-emerald-100 rounded-full px-2 ">
+                            <p class="mr-1 bg-emerald-100 rounded-full px-2">
                                 <span class="text-xs">id</span>{{ user.id }}
                             </p>
                             <img :src="user.avatar" alt="" class="mr-2 w-5 h-5">
                         </div>
 
-                        <div class="">
-                            <p class="">{{ user.name }}</p>
+                        <div class="overflow-hidden max-w-[25vh]">
+                            {{ user.name }}
                         </div>
 
                     </div>

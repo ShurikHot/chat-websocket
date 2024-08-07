@@ -13,11 +13,11 @@
                     <div class="mt-5" v-if="messages.length > 0">
                         <div class="" v-for="message in messages" :id="message.id">
                             <div class="flex items-center items-stretch mt-3">
-                                <div class="border px-7 py-2 bg-gray-200 text-center rounded-lg rounded-r-none">
+                                <div class="border px-7 py-2 bg-gray-200 text-center rounded-lg rounded-r-none w-1/6 overflow-hidden">
                                     <div class="w-12 h-12 m-auto">
                                         <img :src="message.avatar" alt="">
                                     </div>
-                                    <div class="italic text-base text-red-800 font-bold mt-2">
+                                    <div class="italic text-base text-red-800 font-bold my-2 leading-4 overflow-hidden">
                                         {{ message.user.name }}
                                     </div>
                                     <div class="text-xs text-indigo-300 animate-bounce" v-if="message.user.id !== $page.props.auth.user.id">
@@ -104,11 +104,11 @@
 
                     <div class="mt-6">
                         <div class="flex items-center items-stretch mt-3">
-                            <div class="border px-7 py-2 bg-gray-200 rounded-lg rounded-r-none">
+                            <div class="border px-7 py-2 bg-gray-200 rounded-lg text-center rounded-r-none w-1/6 overflow-hidden">
                                 <div class="w-12 h-12 m-auto">
                                     <img :src="theme.auth_user_avatar" alt="">
                                 </div>
-                                <div class="italic text-base text-center text-red-800 font-bold mt-2">
+                                <div class="italic text-base text-center text-red-800 font-bold mt-2 overflow-hidden">
                                     {{ $page.props.auth.user.name }}
                                 </div>
                             </div>
@@ -245,9 +245,10 @@ export default {
                         </span>
                         <span class="text-gray-400">
                             ${message.user.name}:
+                            <br>
                         </span>
                         <span class="text-gray-300">
-                            ${message.content}
+                            "${message.content}"
                         </span>
                         <span class="text-gray-200">
                             (${message.time}):
@@ -269,9 +270,10 @@ export default {
                         </span>
                         <span class="text-gray-400">
                             ${message.user.name}:
+                            <br>
                         </span>
                         <span class="text-gray-300">
-                            ${content}
+                            "${content}"
                         </span>
                         <span class="text-gray-200">
                             (${message.time}):
