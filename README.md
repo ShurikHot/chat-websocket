@@ -15,7 +15,7 @@
 <li>Under the user's avatar there is a link to a chat with this user</li>
 <li>There is a tools bar for some formating operations in the writing message area (<b>Bold</b>, <i>Italic</i>, <u>Underline</u>)</li>
 <li>On the profile page user also can to change its name, e-mail, avatar, password</li>
-<li>There is the ability to get notifications about likes, complaints, answers or quotes for user messages</li>
+<li>There is the ability to get notifications about likes, complaints, answers or quotes for user messages, adding to chat</li>
 
 ## Sample pages
 ### Forum

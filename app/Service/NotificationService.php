@@ -7,7 +7,7 @@ use App\Models\Notification;
 
 class NotificationService
 {
-    public static function store($message, $page, $title)
+    public static function storeForum($message, $page, $title)
     {
         $notification = Notification::query()->create([
             'title' => $title,
@@ -16,5 +16,19 @@ class NotificationService
         ]);
 
         event(new StoreNotificationEvent($notification));
+    }
+
+    public static function storeChat($userIds, $chatId, $title)
+    {
+        foreach ($userIds as $id) {
+            $notification = Notification::query()->create([
+                'title' => $title,
+                'user_id' => $id,
+                'url' => route('chats.show', $chatId)
+            ]);
+
+            event(new StoreNotificationEvent($notification));
+        }
+
     }
 }

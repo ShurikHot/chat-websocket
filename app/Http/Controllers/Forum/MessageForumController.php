@@ -85,7 +85,7 @@ class MessageForumController extends Controller
         $result = $message->likedUsers()->toggle(auth()->id());
 
         if ($result['attached']) {
-            NotificationService::store($message, $page, 'Your message has been liked!');
+            NotificationService::storeForum($message, $page, 'Your message has been liked!');
         }
     }
 
@@ -99,7 +99,7 @@ class MessageForumController extends Controller
 
         Complaint::query()->create($data);
 
-        NotificationService::store($message, $page, 'Your message was complainted!');
+        NotificationService::storeForum($message, $page, 'Your message was complainted!');
 
         return MessageForumResource::make($message)->resolve();
     }
@@ -111,7 +111,7 @@ class MessageForumController extends Controller
         $page = PaginationService::page($data['id'], $data['theme_id']);
         $message = (object)$data;
 
-        NotificationService::store($message, $page, 'Your message was answered!');
+        NotificationService::storeForum($message, $page, 'Your message was answered!');
     }
 
 }

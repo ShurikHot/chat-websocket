@@ -32,7 +32,8 @@
                         </div>
                         <div class="">
                             <a @click.prevent="store()" href=""
-                               class="border rounded-lg bg-sky-200 p-1 cursor-pointer font-bold hover:bg-sky-300">Send message
+                               class="border rounded-lg bg-sky-200 p-1 cursor-pointer font-bold hover:bg-sky-300">
+                                Send message
                             </a>
                         </div>
                     </div>

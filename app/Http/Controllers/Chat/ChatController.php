@@ -9,6 +9,7 @@ use App\Http\Resources\Chat\Message\MessageResource;
 use App\Http\Resources\Chat\User\UserResource;
 use App\Models\Chat\Chat;
 use App\Models\User;
+use App\Service\NotificationService;
 use Illuminate\Support\Facades\DB;
 
 class ChatController extends Controller
@@ -53,6 +54,9 @@ class ChatController extends Controller
             }
 
             $chat->users()->sync($userIds);
+
+            $notificationTitle = 'The user ' . auth()->user()->name . ' added you to a new chat!';
+            NotificationService::storeChat($data['users'], $chat->id, $notificationTitle);
 
             DB::commit();
         } catch (\Exception $exception) {

@@ -33,7 +33,7 @@ class ComplaintController extends Controller
             ? 'The complaint about your message has been solved'
             : 'The complaint about your message in work';
 
-        NotificationService::store($message, $page, $title);
+        NotificationService::storeForum($message, $page, $title);
 
         return ComplaintResource::make($complaint)->resolve();
     }

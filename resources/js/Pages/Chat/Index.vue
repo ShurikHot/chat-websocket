@@ -67,8 +67,8 @@
                 <div v-if="isGroup">
                     <div class="my-2">
                         <a @click.prevent="storeGroup()"
-                           class="border rounded-lg bg-green-200 p-1 cursor-pointer font-bold hover:bg-green-300">Make
-                            group
+                           class="border rounded-lg bg-green-200 p-1 cursor-pointer font-bold hover:bg-green-300">
+                            Make group
                         </a>
                         <a @click.prevent="refreshUserIds()"
                            class="border rounded-lg bg-green-200 p-1 ml-2 cursor-pointer hover:bg-green-300">&#10008;
